@@ -23,7 +23,7 @@ if selected2 == "Загрузка Данных":
         upladdata = pd.read_csv(uploaded_file,sep=";",encoding='utf-8')
         upladdata.columns = ["department_id","fio","post_name","attraction_year","observation_name","work_status_code","worker_address","worker_email","worker_phone_number","work_exp_name","work_status_status"]
         data = upladdata.to_json(orient="records")
-        response = requests.post('https://httpbin.org/post', data={'records':data})
+        response = requests.post('http://localhost1234/status', data={'records':data})
 
     df = pd.DataFrame(
     [
