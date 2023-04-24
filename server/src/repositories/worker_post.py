@@ -22,8 +22,8 @@ class WorkerPostRepository:
         )
         return record
 
-    async def add(self, request: WorkerPostRequest) -> WorkerPost:
-        record = WorkerPost(**dict(request))
+    async def add(self, worker_guid: str, post_id: int) -> WorkerPost:
+        record = WorkerPost(worker_guid=worker_guid, post_id=post_id)
         self.session.add(record)
         self.session.commit()
         return record

@@ -10,7 +10,7 @@ class ObservationsRepository:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
-    async def get_by_name(self, name: str, department_id: str) -> Optional[Observations]:
+    async def get(self, name: str, department_id: str) -> Optional[Observations]:
         record = (
             self.session
             .query(Observations)

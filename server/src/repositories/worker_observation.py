@@ -22,8 +22,8 @@ class WorkerObservationRepository:
         )
         return record
 
-    async def add(self, request: WorkerObservationRequest) -> WorkerObservation:
-        record = WorkerObservation(**dict(request))
+    async def add(self, worker_guid: str, observation_id: int) -> WorkerObservation:
+        record = WorkerObservation(worker_guid=worker_guid, observation_id=observation_id)
         self.session.add(record)
         self.session.commit()
         return record

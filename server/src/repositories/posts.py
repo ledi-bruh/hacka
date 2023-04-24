@@ -10,7 +10,7 @@ class PostsRepository:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
-    async def get_by_name(self, name: str) -> Optional[PostsRequest]:
+    async def get_by_name(self, name: str) -> Optional[Posts]:
         record = (
             self.session
             .query(Posts)
