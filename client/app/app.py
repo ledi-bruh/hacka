@@ -42,6 +42,36 @@ if selected2 == "Формирование выборок":
     options2 = st.sidebar.multiselect(
     'Адрес проживания',
     ['Село Алексеевка', 'Омск', 'Тара', 'Борьшеречье'])
-    number = st.sidebar.number_input('Введите год',step = 1,max_value=datetime.now().year,min_value=1991)
+    number = st.sidebar.slider(
+    "Год привелчения",
+    min_value = 1991,
+    max_value= datetime.now().year,
+    value=(1991, datetime.now().year)),
     name_abs = st.sidebar.text_input('Наименование выборочного наблюдения', placeholder= 'Введите наименование')
     status = st.sidebar.text_input('Оценка качества работы', placeholder= 'Введите оценку')
+    query = ["SELECT * FROM mega_table"]
+    if options:
+        s = "(city = '"
+        s += "' OR city = '".join(options)
+        s+="')"
+        query.append(s)
+    
+    if options2:
+        s = "(address = '"
+        s += "' OR address = '".join(options)
+        s+="')"
+        query.append(s)
+    
+    if number:
+        s = f"(year BETWEEN {number[0][0]} AND {number[0][1]})"
+        query.append(s)
+
+    if name_abs:
+        query.append(f"(observation = {name_abs})")
+
+    if status:
+        query.append(f"(status = {status})")
+
+    s = " AND ".join(query).replace("AND", "WHERE", 1)
+    print(s)
+    
