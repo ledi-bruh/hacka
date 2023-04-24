@@ -12,9 +12,10 @@ class Settings(BaseSettings):
     db_host: str
     db_port: int
     db_database: str
+    db_schema: str
 
     class Config:
-        env_file = '../.env'
+        env_file = '../../.env'
         env_file_encoding = 'utf-8'
 
 
