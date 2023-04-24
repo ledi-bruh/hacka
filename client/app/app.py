@@ -12,8 +12,8 @@ st.sidebar.info("Cсылка на "
                 "[github](https://github.com/ledi-bruh/hacka)")
 
 with st.sidebar: 
-    selected2 = option_menu(None, ["Информация", "Загрузка Данных", 'Формирование выборок'], 
-        icons=['info', 'bi bi-arrow-down-square-fill', "bi bi-menu-button-wide-fill"], 
+    selected2 = option_menu(None, ["Информация", "Загрузка Данных", 'Формирование выборок','Редактирование'], 
+        icons=['info', 'bi bi-arrow-down-square-fill', "bi bi-menu-button-wide-fill","bi bi-menu-button-wide-fill"], 
         menu_icon="cast", default_index=0)
     
 
@@ -75,3 +75,10 @@ if selected2 == "Формирование выборок":
     s = " AND ".join(query).replace("AND", "WHERE", 1)
     print(s)
     
+
+if selected2 == "Редактирование":
+    uploaded_file = st.file_uploader("Выберете файл")
+    if uploaded_file is not None:
+        upladdata = pd.read_csv(uploaded_file,sep=";",encoding='utf-8')
+        edited_df = st.experimental_data_editor(upladdata, num_rows="dynamic",use_container_width=False,width = 1000)
+        st.write(edited_df)
