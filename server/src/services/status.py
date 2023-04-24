@@ -1,4 +1,5 @@
 from fastapi import Depends
+from src.repositories.status import StatusRepository
 from src.models.schemas.adding_request import AddingRequest
 from src.models.schemas.status_request import StatusRequest
 
@@ -33,6 +34,7 @@ from src.models.schemas.work_status.work_status_request import WorkStatusRequest
 
 class StatusService:
     def __init__(self,
+                 repo: StatusRepository = Depends(),
                  posts_service: PostsService = Depends(),
                  posts_repo: PostsRepository = Depends(),
                  obs_service: ObservationsService = Depends(),
@@ -47,6 +49,7 @@ class StatusService:
                  worker_obs_repo: WorkerObservationRepository = Depends(),
                  work_status_service: WorkStatusService = Depends(),
                  work_status_repo: WorkStatusRepository = Depends()):
+        self.repo = repo
         self.posts_repo = posts_repo
         self.posts_service = posts_service
         self.observations_service = obs_service
@@ -106,3 +109,6 @@ class StatusService:
                 request.work_status_code,
                 request.work_status_status,
             )
+
+    async def get_by_query(self, query: str) -> None:
+        return await self.repo.get_by_query(query)
